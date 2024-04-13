@@ -1,0 +1,24 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: hello-rodo
+  labels:
+    app: hello-rodo
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: hello-rodo
+  template:
+    metadata:
+      labels:
+        app: hello-rodo
+    spec:
+      containers:
+        - name: hello-container
+          image: rodolgiaco/hello-rodo:1.1
+          ports:
+            - containerPort: 8080
+          env:
+            - name: JVM_OPTIONS
+              value: "-Xms1024m -Xmx4072m"

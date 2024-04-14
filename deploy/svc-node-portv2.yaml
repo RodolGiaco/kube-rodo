@@ -1,0 +1,13 @@
+kind: Service
+apiVersion: v1
+metadata:
+  name:  hello-rodo-servicev2
+  labels:
+    service: hello-rodov2
+spec:
+  type: NodePort
+  ports:
+    - port: 1234
+      targetPort:  8080
+  selector:
+    app: hello-rodov2

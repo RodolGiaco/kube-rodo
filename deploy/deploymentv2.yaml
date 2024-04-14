@@ -1,22 +1,22 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: hello-rodo
+  name: hello-rodov2
   labels:
-    app: hello-rodo
+    app: hello-rodov2
 spec:
   replicas: 3
   selector:
     matchLabels:
-      app: hello-rodo
+      app: hello-rodov2
   template:
     metadata:
       labels:
-        app: hello-rodo
+        app: hello-rodov2
     spec:
       containers:
-        - name: hello-container
-          image: rodolgiaco/hello-rodo:1.1
+        - name: hello-containerv2
+          image: rodolgiaco/hello-rodo:1.2
           ports:
             - containerPort: 8080
           env:

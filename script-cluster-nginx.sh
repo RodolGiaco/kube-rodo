@@ -23,6 +23,9 @@ apply_manifests "deploy"
 # Aplicar los manifiestos en la carpeta 'ingress'
 apply_manifests "nginx"
 
+# Aplicar los manifiestos en la carpeta 'services'
+apply_manifests "services"
+
 sleep 200
 # Aplicar los manifiestos en la carpeta 'ingress'
 apply_manifests "ingress"

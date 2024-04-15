@@ -2,11 +2,8 @@
 kind delete cluster --name=rodo
 kind create cluster --name=rodo
 
-
-helm repo add ingress-nginx https://kubernetes.github.io/ingress-nginx
 helm repo add traefik https://helm.traefik.io/traefik
 helm repo update
-helm install nginx-ingress ingress-nginx/ingress-nginx
 helm install traefik traefik/traefik
 
 # Define una función para aplicar los manifiestos en una carpeta
@@ -25,9 +22,11 @@ apply_manifests() {
 # Aplicar los manifiestos en la carpeta 'deploy'
 apply_manifests "deploy"
 
-# Aplicar los manifiestos en la carpeta 'ingress'
-apply_manifests "nginx"
+# Aplicar los manifiestos en la carpeta 'services'
+apply_manifests "services"
 
 sleep 200
-# Aplicar los manifiestos en la carpeta 'ingress'
-apply_manifests "ingress"
+
+# Aplicar los manifiestos en la carpeta 'traefik'
+apply_manifests "traefik"
+

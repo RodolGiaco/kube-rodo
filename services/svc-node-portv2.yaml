@@ -1,6 +1,7 @@
 kind: Service
 apiVersion: v1
 metadata:
+  namespace: beta
   name:  hello-rodo-servicev2
   labels:
     service: hello-rodov2

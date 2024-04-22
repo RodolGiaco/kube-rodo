@@ -3,8 +3,10 @@ kind: Ingress
 metadata:
     name: ingress
     namespace: default
+    annotations:
+      traefik.ingress.kubernetes.io/router.middlewares: default-ratelimit@kubernetescrd
 spec:
-    ingressClassName: nginx
+    ingressClassName: traefik
     rules:
       - host: www.rodogiaco.com
         http:
@@ -16,7 +18,6 @@ spec:
                   port:
                     number: 1234
               path: /
-
       - host: www.rodogiacov2.com
         http:
           paths:
@@ -27,3 +28,4 @@ spec:
                   port:
                     number: 1234
               path: /
+

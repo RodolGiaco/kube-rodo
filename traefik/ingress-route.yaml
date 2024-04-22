@@ -1,0 +1,25 @@
+apiVersion: traefik.containo.us/v1alpha1
+kind: IngressRoute
+metadata:
+  name: ingressroute
+  namespace: default
+spec:
+  entryPoints:
+    - web
+  routes:
+    - match: Host(`www.rodogiaco.com`)
+      kind: Rule
+      services:
+        - name: hello-rodo-service
+          port: 1234
+      middlewares:
+        - name: stripprefix
+          namespace: default
+    - match: Host(`www.rodogiacov2.com`)
+      kind: Rule
+      services:
+        - name: hello-rodo-servicev2
+          port: 1234
+      middlewares:
+        - name: stripprefix
+          namespace: default

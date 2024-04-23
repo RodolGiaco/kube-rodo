@@ -1,0 +1,36 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: ingress
+spec:
+  rules:
+    - http:
+        paths:
+          - backend:
+              service:
+                name: hello-rodo-service
+                port:
+                  number: 1234
+            pathType: Prefix
+            path: /rodo
+          - backend:
+              service:
+                name: hello-rodo-service
+                port:
+                  number: 1234
+            pathType: Prefix
+            path: /rodo/*
+          - backend:
+              service:
+                name: hello-rodo-servicev2
+                port:
+                  number: 1234
+            pathType: Prefix
+            path: /rodov2
+          - backend:
+              service:
+                name: hello-rodo-servicev2
+                port:
+                  number: 1234
+            pathType: Prefix
+            path: /rodov2/*

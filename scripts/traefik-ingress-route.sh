@@ -10,7 +10,7 @@ if [ "${running}" != 'true' ]; then
     registry:2
 fi
 
-    #Crete Kind cluster with ingress and local docker registry
+#Crete Kind cluster with ingress and local docker registry
 cat <<EOF | kind create cluster --config=-
 kind: Cluster
 apiVersion: kind.x-k8s.io/v1alpha4
@@ -53,37 +53,16 @@ EOF
 
 
 # Install Traefik Resource Definitions:
-kubectl apply -f https://raw.githubusercontent.com/traefik/traefik/v2.11/docs/content/reference/dynamic-configuration/kubernetes-crd-definition-v1.yml
-
+#kubectl apply -f https://raw.githubusercontent.com/traefik/traefik/v2.11/docs/content/reference/dynamic-configuration/kubernetes-crd-definition-v1.yml
 # Install RBAC for Traefik:
-kubectl apply -f https://raw.githubusercontent.com/traefik/traefik/v2.11/docs/content/reference/dynamic-configuration/kubernetes-crd-rbac.yml
+#kubectl apply -f https://raw.githubusercontent.com/traefik/traefik/v2.11/docs/content/reference/dynamic-configuration/kubernetes-crd-rbac.yml
 
 # Install Traefik
 kubectl apply -f traefik/deploy.yaml
-
-
-
-# Define una función para aplicar los manifiestos en una carpeta
-apply_manifests() {
-    local folder="$1"
-    local manifests=($(find $folder -type f -name "*.yaml"))
-
-    for manifest in "${manifests[@]}"
-    do
-        echo "Aplicando $manifest..."
-        kubectl apply -f $manifest
-        echo ""
-    done
-}
-
-# Aplicar los manifiestos en la carpeta 'deploy'
-apply_manifests "deploy"
-
-# Aplicar los manifiestos en la carpeta 'services'
-apply_manifests "services"
+kubectl apply -f hello-rodo-app/
 
 sleep 100
 
-kubectl apply -f ingress/ingress.yaml
+kubectl apply -f ingress/ingress-route.yaml
 kubectl apply -f traefik/middleware.yaml
 

@@ -14,6 +14,7 @@ kubectl apply -f services/
 kubectl apply -f ingress-controller/nginx/
 sleep 100
 kubectl apply -f ingress/ingress.yaml
+kubectl annotate ingress ingress kubernetes.io/ingress.class=nginx
 
 #Mapear url con ip del nodo
 #sudo nano /etc/hosts

@@ -17,10 +17,11 @@ kubectl apply -f deploy/
 kubectl apply -f services/
 kubectl apply -f ingress-controller/traefik/middleware.yaml
 kubectl apply -f ingress-controller/traefik/svc-np.yaml
-sleep 200
-kubectl apply -f ingress/ingress.yaml
+sleep 100
+kubectl apply -f ingress/ingress-route.yaml
 kubectl annotate ingress ingress kubernetes.io/ingress.class=traefik
 
 #Mapear url con ip del nodo
 #sudo nano /etc/hosts
 kubectl get node -o wide
+

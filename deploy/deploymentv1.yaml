@@ -1,0 +1,26 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  namespace: default
+  name: hello-rodo
+  labels:
+    app: hello-rodo
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: hello-rodo
+  template:
+    metadata:
+      labels:
+        app: hello-rodo
+    spec:
+      containers:
+        - name: hello-container
+          image: gcr.io/google-samples/hello-app:1.0
+          imagePullPolicy: IfNotPresent
+          ports:
+            - containerPort: 8080
+          env:
+            - name: JVM_OPTIONS
+              value: "-Xms1024m -Xmx4072m"

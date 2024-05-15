@@ -15,6 +15,12 @@ spec:
       middlewares:
         - name: stripprefix
           namespace: default
+        - name: limit
+          namespace: default
+        - name: retry
+          namespace: default
+        - name: ratelimit
+          namespace: default
     - match: Host(`www.rodogiacov2.com`)
       kind: Rule
       services:

@@ -17,6 +17,21 @@ kubectl apply -f deploy/
 kubectl apply -f services/
 kubectl apply -f ingress-controller/traefik/middleware.yaml
 kubectl apply -f ingress-controller/traefik/svc-np.yaml
+
+#Prometheus
+kubectl apply -f prometheus/prometheus-configmap.yaml
+kubectl apply -f prometheus/prometheus-deployment.yaml
+kubectl apply -f prometheus/prometheus-service.yaml
+#kubectl apply -f prometheus/prometheus-adapter-service.yaml
+
+
+helm repo add prometheus-community https://prometheus-community.github.io/helm-charts
+helm repo update
+helm install prometheus-adapter prometheus-community/prometheus-adapter --namespace default
+helm upgrade prometheus-adapter prometheus-community/prometheus-adapter --namespace default -f prometheus/values.yaml
+
+kubectl apply -f hpa/
+
 sleep 100
 kubectl apply -f ingress/ingress.yaml
 kubectl annotate ingress ingress kubernetes.io/ingress.class=traefik

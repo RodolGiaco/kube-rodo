@@ -7,7 +7,7 @@ spec:
   rateLimit:
     average: 5
     burst: 5
-    period: 5m
+    period: 1m
 
 ---
 apiVersion: traefik.containo.us/v1alpha1
@@ -28,7 +28,7 @@ metadata:
   namespace: default
 spec:
   buffering:
-    retryExpression: "ResponseCode()==429"
+    retryExpression: "ResponseCode()==500"
 ---
 
 ---
@@ -38,8 +38,7 @@ metadata:
   name: retry
 spec:
   retry:
-    attempts: 2
-    initialInterval: 20000ms
+    attempts: 5
+    initialInterval: 5000ms
 
 ---
-

@@ -3,7 +3,8 @@ kind: Ingress
 metadata:
     name: ingress
     annotations:
-      traefik.ingress.kubernetes.io/router.middlewares: default-ratelimit@kubernetescrd
+      traefik.ingress.kubernetes.io/router.middlewares:  default-retry@kubernetescrd, default-ratelimit@kubernetescrd
+
 spec:
     rules:
       - host: www.rodogiaco.com

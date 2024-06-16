@@ -27,3 +27,9 @@ spec:
       name: metrics
       targetPort: 9100
       protocol: TCP
+    - port: 12093
+      name: tcp
+      targetPort: 12093
+      protocol: TCP
+      nodePort: 30001
+

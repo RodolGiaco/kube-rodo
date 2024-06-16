@@ -161,6 +161,9 @@ spec:
         - name: websecure
           containerPort: 8443
           protocol: TCP
+        - name: tcp
+          containerPort: 12093
+          protocol: TCP
         securityContext:
           allowPrivilegeEscalation: false
           capabilities:
@@ -229,6 +232,7 @@ metadata:
   name: traefik-dashboard
   namespace: default
   labels:
+    app.kubernetes.io/component: controller
     app.kubernetes.io/name: traefik
     app.kubernetes.io/instance: traefik-default
 spec:

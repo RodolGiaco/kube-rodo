@@ -17,10 +17,11 @@ spec:
     spec:
       containers:
         - name: hello-container
-          image: gcr.io/google-samples/hello-app:1.0
+          image: rodolgiaco/hello-rodo:1.3
           imagePullPolicy: IfNotPresent
           ports:
             - containerPort: 8080
+            - containerPort: 9000
           env:
             - name: JVM_OPTIONS
               value: "-Xms1024m -Xmx4072m"

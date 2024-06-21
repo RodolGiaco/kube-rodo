@@ -17,7 +17,6 @@ metadata:
     app.kubernetes.io/component: controller
     app.kubernetes.io/name: traefik
     app.kubernetes.io/instance: traefik-default
-    app.kubernetes.io/managed-by: H
 rules:
   - apiGroups:
       - extensions
@@ -181,6 +180,7 @@ spec:
           - --entrypoints.traefik.address=:9000/tcp
           - --entrypoints.web.address=:8000/tcp
           - --entrypoints.websecure.address=:8443/tcp
+          - --entrypoints.tcp.address=:12093/tcp
           - --api.dashboard=true
           - --ping=true
           - --metrics.prometheus=true

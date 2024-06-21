@@ -2,6 +2,7 @@ kind: Service
 apiVersion: v1
 metadata:
   name:  hello-tcp-rodo
+  namespace: beta
   labels:
     service: hello-rodo
 spec:
@@ -9,5 +10,22 @@ spec:
   ports:
     - port: 1234
       targetPort: 9000
+  selector:
+    app: hello-rodo
+
+---
+
+kind: Service
+apiVersion: v1
+metadata:
+  name:  hello-http-rodo
+  namespace: beta
+  labels:
+    service: hello-rodo
+spec:
+  type: NodePort
+  ports:
+    - port: 1234
+      targetPort: 8080
   selector:
     app: hello-rodo

@@ -3,20 +3,24 @@ kind: Service
 metadata:
   name: traefik
   namespace: beta
+  labels:
+    app.kubernetes.io/name: traefik
+    app.kubernetes.io/instance: traefik-beta
 spec:
   type: LoadBalancer
+  selector:
+    app.kubernetes.io/name: traefik
+    app.kubernetes.io/instance: traefik-beta
   ports:
     - protocol: TCP
       port: 80
-      targetPort: 80
+      targetPort: web
       name: web
     - protocol: TCP
       port: 443
-      targetPort: 443
+      targetPort: websecure
       name: websecure
     - protocol: TCP
       port: 12093
-      targetPort: 12093
+      targetPort: tcp
       name: tcp
-  selector:
-    app: traefik

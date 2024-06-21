@@ -5,4 +5,4 @@ metadata:
   namespace: beta
 spec:
   defaultCertificate:
-    secretName: playback-le
+    secretName: rodo-le

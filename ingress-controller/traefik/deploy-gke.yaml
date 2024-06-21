@@ -192,9 +192,10 @@ spec:
             - --providers.kubernetescrd
             - --providers.kubernetesingress
             - --entrypoints.websecure.http.tls=true
-            - --certificatesresolvers.hello-rodo-le.acme.email=rodolfo.giacomodonatto@sitrack.com
+            - --entrypoints.web.http.tls=true
+            - --certificatesresolvers.hello-rodo-le.acme.email=rodol.giacomodonatto@gmail.com
             - --certificatesresolvers.hello-rodo-le.acme.storage=/letsencrypt/acme.json
-#            - --certificatesresolvers.playback-cert.acme.httpchallenge.entrypoint=web
+#            - --certificatesresolvers.hello-rodo-le.acme.httpchallenge.entrypoint=websecure
 #            - --certificatesresolvers.playback-cert.acme.dnsChallenge.provider=godaddy
             - --certificatesresolvers.hello-rodo-le.acme.tlschallenge=true
             - --certificatesresolvers.hello-rodo-le.acme.caserver=https://acme-staging-v02.api.letsencrypt.org/directory
@@ -223,9 +224,8 @@ spec:
 
       volumes:
         - name: letsencrypt
-          emptyDir: { }
-#          persistentVolumeClaim:
-#            claimName: letsencrypt-pvc
+          persistentVolumeClaim:
+            claimName: letsencrypt-pvc
         - name: data
           emptyDir: {}
         - name: tmp

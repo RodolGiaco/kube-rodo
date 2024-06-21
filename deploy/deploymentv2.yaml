@@ -1,12 +1,12 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  namespace: default
+  namespace: beta
   name: hello-rodov2
   labels:
     app: hello-rodov2
 spec:
-  replicas: 3
+  replicas: 1
   selector:
     matchLabels:
       app: hello-rodov2

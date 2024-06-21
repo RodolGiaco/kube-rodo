@@ -1,0 +1,47 @@
+apiVersion: traefik.containo.us/v1alpha1
+kind: IngressRouteTCP
+metadata:
+  name: playback-tcp-ingress
+  namespace: beta
+spec:
+  entryPoints:
+    - tcp
+  routes:
+    - match: HostSNI(`kuberodo.ddns.net`)
+      services:
+        - name: hello-tcp-rodo
+          port: 1234
+          weight: 10
+          proxyProtocol:
+            version: 1
+          nativeLB: true
+
+  tls:
+    secretName: rodo-le
+    options:
+      name: opt
+      namespace: beta
+    certResolver: kuberodo.ddns.net
+    domains:
+      - main: playback.sitrack.io
+#        sans:
+#          - a.rodo.ddns.net
+#          - b.rodo.ddns.net
+    passthrough: false
+---
+#apiVersion: traefik.containo.us/v1alpha1
+#kind: IngressRoute
+#metadata:
+#  name: playback-https
+#  namespace: beta
+#spec:
+#  entryPoints:
+#    - tcp
+#  routes:
+#    - match: Host(`rodo.zapto.org`)
+#      kind: Rule
+#      services:
+#        - name: video-playback-api
+#          port: 4444
+#  tls:
+#    certResolver: le

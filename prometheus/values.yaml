@@ -1,23 +1,18 @@
-# values.yaml
-prometheus:
-  url: http://prometheus.default.svc:9090
-
 rules:
+  default: false
   custom:
-    - seriesQuery: 'traefik_service_requests_total'
+    - seriesQuery: '{__name__="traefik_service_requests_total"}'
+      seriesFilters: []
       resources:
         overrides:
-          namespace: {resource: "namespace"}
-          pod: {resource: "pod"}
+          namespace:
+            resource: namespace
+          pod:
+            resource: pod
       name:
-        matches: "^(.*)_total"
-        as: "rodo-metrics"
-      metricsQuery: 'rate(traefik_service_requests_total{<<.LabelMatchers>>}[1m])'
+        matches: "^traefik_service_requests_total$"
+        as: "custom_metric_name"
+      metricsQuery: 'traefik_service_requests_total'
 
-extraArgs:
-  - --v=6
-serviceAccount:
-  create: true
-
-rbac:
-  create: true
+prometheus:
+  url: http://prometheus-server.beta.svc

@@ -26,3 +26,23 @@ kubectl apply -f ingress-controller/traefik/tlsoption.yaml
 
 #kubectl apply -f traefik/ingressroute-http.yaml --namespace beta
 
+#Prometheus
+kubectl apply -f prometheus/prometheus-configmap.yaml
+kubectl apply -f prometheus/prometheus-deployment.yaml
+kubectl apply -f prometheus/prometheus-service.yaml
+
+kubectl apply -f prometheus/prometheus-adapter-clusterrolebinding.yaml
+kubectl apply -f prometheus/prometheus-adapter-configmap.yaml
+kubectl apply -f prometheus/prometheus-adapter-deployment.yaml
+kubectl apply -f prometheus/prometheus-adapter-service.yaml
+kubectl apply -f prometheus/rolebinding.yaml
+
+
+helm repo add prometheus-community https://prometheus-community.github.io/helm-charts
+helm repo add stable https://charts.helm.sh/stable
+helm repo update
+helm install prometheus-adapter prometheus-community/prometheus-adapter --namespace beta
+helm upgrade --install prometheus-adapter prometheus-community/prometheus-adapter --namespace beta -f prometheus/values.yaml
+
+helm upgrade --install prometheus prometheus-community/prometheus --namespace beta -f prometheus/prometheus-configmap.yaml
+

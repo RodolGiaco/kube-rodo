@@ -2,7 +2,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: prometheus-adapter
-  namespace: default
+  namespace: beta
 spec:
   replicas: 1
   selector:
@@ -13,6 +13,7 @@ spec:
       labels:
         app: prometheus-adapter
     spec:
+      serviceAccountName: default
       containers:
         - name: prometheus-adapter
           image: registry.k8s.io/prometheus-adapter/prometheus-adapter:v0.11.2
@@ -20,7 +21,7 @@ spec:
             - /adapter
             - --secure-port=6443
             - --cert-dir=/tmp/cert
-            - --prometheus-url=http://prometheus.default.svc:9090
+            - --prometheus-url=http://prometheus.beta.svc:9090
             - --metrics-relist-interval=1m
             - --config=/etc/adapter/config.yaml
             - --v=6  # Nivel de logs detallado

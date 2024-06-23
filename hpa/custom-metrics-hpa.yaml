@@ -1,23 +1,28 @@
-apiVersion: autoscaling/v2
+apiVersion: autoscaling/v2beta2
 kind: HorizontalPodAutoscaler
 metadata:
-  name: hello-rodo-hpa
-  namespace: default
+  name: traefik-hpa
+  namespace: kube-system
 spec:
   scaleTargetRef:
     apiVersion: apps/v1
     kind: Deployment
-    name: hello-rodo
+    name: traefik
   minReplicas: 1
   maxReplicas: 10
   metrics:
+#    - type: Pods
+#      pods:
+#        metric:
+#          name: traefik_tcp_connections
+#        target:
+#          type: AverageValue
+#          averageValue: 5
     - type: Pods
       pods:
         metric:
-          name: rodo-metrics
+          name: traefik_http_requests
         target:
           type: AverageValue
-          averageValue: "0.1"
-
-
+          averageValue: 5
 

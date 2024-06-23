@@ -5,4 +5,4 @@ metadata:
   namespace: beta
 spec:
   defaultCertificate:
-    secretName: rodo-le
+    certResolver: hello-rodo-le

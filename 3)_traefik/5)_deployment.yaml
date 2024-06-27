@@ -1,0 +1,108 @@
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  namespace: beta
+  name: traefik-ingress-controller
+
+---
+kind: Deployment
+apiVersion: apps/v1
+metadata:
+  namespace: beta
+  name: traefik
+  labels:
+    app: traefik
+
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: traefik
+  template:
+    metadata:
+      annotations:
+        prometheus.io/scrape: "true"
+        prometheus.io/path: "/metrics"
+        prometheus.io/port: "9100"
+      labels:
+        app: traefik
+    spec:
+      serviceAccountName: traefik-ingress-controller
+      terminationGracePeriodSeconds: 60
+      hostNetwork: true
+      containers:
+        - name: traefik
+          image: traefik:v3.0
+          imagePullPolicy: IfNotPresent
+          args:
+            - --api.insecure
+            - --accesslog
+            - --entryPoints.metrics.Address=:9100
+            - --entryPoints.traefik.Address=:9000
+            - --entryPoints.web.Address=:8000
+            - --entryPoints.websecure.Address=:4443
+            - --entryPoints.tcp.Address=:12093
+            - --providers.kubernetescrd
+            - --log.level=DEBUG
+
+
+            #prometheus
+            - --metrics.prometheus.buckets=0.1,0.3,1.2,5.0
+            - --metrics.prometheus=true
+            - --metrics.prometheus.entrypoint=metrics
+            - --metrics.prometheus.addEntryPointsLabels=true
+            - --metrics.prometheus.addServicesLabels=true
+            - --metrics.prometheus.addRoutersLabels=true
+            - --metrics.prometheus.headerLabels.host=X-Forwarded-Host
+            - --tcpserverstransport.tls.insecureskipverify=true
+            - --tracing.addinternals
+            - --tracing.servicename
+#            - --certificatesresolvers.myresolver.acme.tlschallenge
+#            - --certificatesresolvers.myresolver.acme.email=foo@you.com
+#            - --certificatesresolvers.myresolver.acme.storage=acme.json
+#            - --certificatesresolvers.myresolver.acme.caserver=https://acme-staging-v02.api.letsencrypt.org/directory
+          ports:
+            - name: metrics
+              containerPort: 9100
+            - name: traefik
+              containerPort: 9000
+            - name: web
+              containerPort: 8000
+            - name: websecure
+              containerPort: 4443
+            - name: admin
+              containerPort: 8080
+            - name: tcp
+              containerPort: 12093
+          env:
+            - name: POD_NAME
+              valueFrom:
+                fieldRef:
+                  fieldPath: metadata.name
+            - name: POD_NAMESPACE
+              valueFrom:
+                fieldRef:
+                  fieldPath: metadata.namespace
+
+          securityContext:
+            allowPrivilegeEscalation: false
+            capabilities:
+              drop:
+                - ALL
+            readOnlyRootFilesystem: true
+
+          volumeMounts:
+            - name: letsencrypt
+              mountPath: /letsencrypt
+            - name: data
+              mountPath: /data
+            - name: tmp
+              mountPath: /tmp
+
+      volumes:
+        - name: letsencrypt
+          emptyDir: { }
+        - name: data
+          emptyDir: { }
+        - name: tmp
+          emptyDir: { }

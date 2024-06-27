@@ -1,0 +1,25 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  namespace: beta
+  name: hello-rodov1
+  labels:
+    app: hello-rodov1
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: hello-rodov1
+  template:
+    metadata:
+      labels:
+        app: hello-rodov1
+    spec:
+      containers:
+        - name: hello-containerv1
+          image: rodolgiaco/hello-rodo:1.1
+          ports:
+            - containerPort: 8080
+          env:
+            - name: JVM_OPTIONS
+              value: "-Xms1024m -Xmx4072m"

@@ -1,14 +1,14 @@
 kind: Service
 apiVersion: v1
 metadata:
-  namespace: default
+  namespace: beta
   name:  hello-rodo-service
   labels:
-    service: hello-rodo
+    service: hello-rodov1
 spec:
   type: NodePort
   ports:
     - port: 1234
       targetPort: 8080
   selector:
-    app: hello-rodo
+    app: hello-rodov1

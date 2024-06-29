@@ -2,23 +2,23 @@
 apiVersion: autoscaling/v2
 kind: HorizontalPodAutoscaler
 metadata:
-  name: hpa-hello-rodov2
+  name: hpa-hello-rodov1
   namespace: beta
 spec:
   scaleTargetRef:
     apiVersion: apps/v1
     kind: Deployment
-    name: hello-rodov2
+    name: hello-rodov1
   minReplicas: 1
   maxReplicas: 10
   metrics:
     - type: External
       external:
         metric:
-          name: ccu
+          name: sugal
           selector:
             matchLabels:
-              host: rodo.zapto.org
+              host: kuberodo.ddns.net
         target:
           type: AverageValue
           averageValue: 500m

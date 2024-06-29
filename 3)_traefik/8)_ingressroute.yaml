@@ -28,7 +28,7 @@ spec:
   routes:
     - match: Host(`kuberodo.ddns.net`)
       kind: Rule
-      priority: 12
+      priority: 1
       # defining several services is possible and allowed, but for now the servers of
       # all the services (for a given route) get merged altogether under the same
       # load-balancing strategy.
@@ -38,6 +38,12 @@ spec:
           # strategy defines the load balancing strategy between the servers. It defaults
           # to Round Robin, and for now only Round Robin is supported anyway.
           strategy: RoundRobin
+    - match: Host(`rodo.zapto.org`)
+      kind: Rule
+      priority: 1
+      services:
+        - name: hello-rodo-service
+          port: 1234
   #    - match: PathPrefix(`/lb`)
   #      kind: Rule
   #      services:
@@ -73,7 +79,7 @@ spec:
   entryPoints:
     - tcp
   routes:
-    - match: HostSNI(`kuberodo.ddns.net`)
+    - match: HostSNI(`*`)
       services:
         - name: hello-tcp-rodo
           port: 1234

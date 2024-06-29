@@ -20,19 +20,8 @@ data:
         matches: "^(.*)_total"
         as: "${1}_per_second"
       metricsQuery: 'sum(rate(<<.Series>>{<<.LabelMatchers>>}[2m])) by (<<.GroupBy>>)'
-    - seriesQuery: 'traefik_service_requests_total{namespace!="",pod!=""}'
-      resources:
-        overrides:
-          namespace:
-            resource: namespace
-          pod:
-            resource: pod
-      name:
-        matches: "^(.*)_total"
-        as: "http_rate"
-      metricsQuery: 'sum(rate(<<.Series>>{<<.LabelMatchers>>}[2m])) by (<<.GroupBy>>)'
     externalRules:
-      - seriesQuery: 'traefik_service_requests_total{namespace!="",pod!=""}'
+      - seriesQuery: 'traefik_service_requests_total{namespace!="",pod!="",host="rodo.zapto.org"}'
         resources:
           overrides:
             namespace:
@@ -41,5 +30,18 @@ data:
               resource: pod
         name:
           matches: "^(.*)_total"
-          as: "http_rate"
-        metricsQuery: 'sum(rate(<<.Series>>{<<.LabelMatchers>>}[2m])) by (<<.GroupBy>>)'
+          as: "sugal"
+        metricsQuery: 'sum(rate(<<.Series>>{<<.LabelMatchers>>}[2m])) by (host, <<.GroupBy>>)'
+      - seriesQuery: 'traefik_service_requests_total{namespace!="",pod!="",host="kuberodo.ddns.net"}'
+        resources:
+          overrides:
+            namespace:
+              resource: namespace
+            pod:
+              resource: pod
+        name:
+          matches: "^(.*)_total"
+          as: "ccu"
+        metricsQuery: 'sum(rate(<<.Series>>{<<.LabelMatchers>>}[2m])) by (host, <<.GroupBy>>)'
+        
+        

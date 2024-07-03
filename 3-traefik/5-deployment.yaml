@@ -55,8 +55,8 @@ spec:
             - --metrics.prometheus.addRoutersLabels=true
             - --metrics.prometheus.headerLabels.host=X-Forwarded-Host
             - --tcpserverstransport.tls.insecureskipverify=true
-            - --tracing.addinternals
-            - --tracing.servicename
+#            - --tracing.addinternals
+#            - --tracing.servicename
 #            - --certificatesresolvers.myresolver.acme.tlschallenge
 #            - --certificatesresolvers.myresolver.acme.email=foo@you.com
 #            - --certificatesresolvers.myresolver.acme.storage=acme.json

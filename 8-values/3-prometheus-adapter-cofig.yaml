@@ -1,0 +1,44 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: prometheus-adapter-config
+  namespace: monitoring
+  labels:
+    app: prometheus-adapter
+data:
+  config.yaml: |
+    rules:
+      - seriesQuery: 'traefik_service_requests_total{namespace!="",pod!="",host="rodo.zapto.org"}'
+        resources:
+          overrides:
+            namespace:
+              resource: namespace
+            pod:
+              resource: pod
+        name:
+          matches: "^(.*)_total"
+          as: "rodo"
+        metricsQuery: 'sum(rate(<<.Series>>{<<.LabelMatchers>>}[2m])) by (host, <<.GroupBy>>)'
+    externalRules:
+      - seriesQuery: 'traefik_service_requests_total{namespace!="",pod!="",host="kuberodo.ddns.net"}'
+        resources:
+          overrides:
+            namespace:
+              resource: namespace
+            pod:
+              resource: pod
+        name:
+          matches: "^(.*)_total"
+          as: "sugal"
+        metricsQuery: 'sum(rate(<<.Series>>{<<.LabelMatchers>>}[2m])) by (host, <<.GroupBy>>)'
+      - seriesQuery: 'traefik_service_requests_total{namespace!="",pod!="",host="kuberodo.ddns.net"}'
+        resources:
+          overrides:
+            namespace:
+              resource: namespace
+            pod:
+              resource: pod
+        name:
+          matches: "^(.*)_total"
+          as: "ccu"
+        metricsQuery: 'sum(rate(<<.Series>>{<<.LabelMatchers>>}[2m])) by (host, <<.GroupBy>>)'

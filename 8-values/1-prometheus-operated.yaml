@@ -1,0 +1,26 @@
+# values.yaml
+alertmanager:
+  enabled: false
+  alertmanagerSpec:
+    replicas: 1
+
+prometheus:
+  prometheusSpec:
+    serviceMonitorSelectorNilUsesHelmValues: true
+    serviceMonitorSelector:
+      matchLabels:
+        app: traefik
+
+grafana:
+  enabled: false
+  adminPassword: "admin"
+
+kubeStateMetrics:
+  enabled: false
+
+nodeExporter:
+  enabled: false
+
+prometheusOperator:
+  tlsProxy:
+    enabled: false

@@ -14,5 +14,11 @@ spec:
     matchLabels:
       team: devops
 
-
-
+  alerting:
+    alertmanagers:
+      - namespace: monitoring
+        name: alertmanager
+        port: web
+  ruleSelector:
+    matchLabels:
+      role: prometheus-rulefiles

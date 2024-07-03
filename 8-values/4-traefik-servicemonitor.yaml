@@ -1,10 +1,10 @@
 apiVersion: monitoring.coreos.com/v1
 kind: ServiceMonitor
 metadata:
+  labels:
+    app: traefik
   name: traefik
   namespace: monitoring
-  labels:
-    team: devops
 spec:
   endpoints:
     - port: metrics

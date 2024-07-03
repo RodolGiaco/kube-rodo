@@ -1,0 +1,21 @@
+apiVersion: monitoring.coreos.com/v1
+kind: PrometheusRule
+metadata:
+  name: prometheus-rules
+  namespace: monitoring
+  labels:
+    role: prometheus-rulefiles
+spec:
+  groups:
+    - name: custom-metrics-alerts
+      rules:
+        - alert: HighHttpRateV1
+          expr: rate(traefik_service_requests_total{namespace!="",pod!="",host="rodo.zapto.org"}[5m]) > 0.005
+          for: 5m
+          labels:
+            severity: critical
+          annotations:
+            summary: "High http_ratev1 detected"
+            description: "http_ratev1 has exceeded the threshold of 0.05 for more than 5 minutes."
+
+

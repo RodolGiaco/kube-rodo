@@ -18,7 +18,7 @@ spec:
           name: ccu
           selector:
             matchLabels:
-              host: rodo.zapto.org
+              host: kuberodo.ddns.net
         target:
           type: AverageValue
           averageValue: 500m

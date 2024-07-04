@@ -18,7 +18,7 @@ spec:
           name: sugal
           selector:
             matchLabels:
-              host: kuberodo.ddns.net
+              host: rodo.zapto.org
         target:
           type: AverageValue
           averageValue: 500m
